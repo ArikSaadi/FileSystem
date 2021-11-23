@@ -20,11 +20,12 @@ public class main {
         music.add(song);
         music.add(song2);
         music.add(song3);
+        System.out.println(root.getAllNodes(root));
+        System.out.println(root.getNodes());
+//        System.out.println(root.getChildren());
 
-        System.out.println(root.getChildren());
-
-        root.getNodes().forEach(node -> {
-            System.out.println(node.isDirectory());
-        });
+//        root.getNodes().forEach(node -> {
+//            System.out.println(node.isDirectory());
+//        });
     }
 }

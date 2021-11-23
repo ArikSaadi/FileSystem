@@ -1,16 +1,13 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Directory extends Node {
-    private Set<Node> nodes;
+    private List<Node> nodes;
     private LocalStorage localStorage;
 
     public Directory(String name, String path){
         super(name, path);
-        nodes = new TreeSet<Node>();
+        nodes = new ArrayList<>();
         localStorage = new LocalStorage();
         this.setPath(path);
         int elementInPath = this.getPath().length() - 1;
@@ -18,7 +15,7 @@ public class Directory extends Node {
 //        this.setParent(this.getPath().split("/")[elementInPath]);
     }
 
-    public Set<Node> getNodes(){
+    public List<Node> getNodes(){
         return nodes;
     }
 
@@ -32,15 +29,11 @@ public class Directory extends Node {
         }
     }
 
-    public ArrayList<Node> getAll(){
-
-        for(Node node : this.nodes){
-            if (!node.isDirectory()){
-
-            }
-        }
+    public ArrayList<String> getAllNodes(Node node){
+        ArrayList<String> retList = new ArrayList<>();
+        node.hasChildren(node);
+        return retList;
     }
-
 
 
     @Override

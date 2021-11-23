@@ -46,7 +46,11 @@ public abstract class Node implements Comparable<Node> {
     }
 
     public ArrayList<Node> getChildren() {
-        return this.children;
+        return this.children!= null ? this.children : null;
+    }
+
+    public boolean hasChildren(Node node){
+        return node.getChildren() != null;
     }
 
     public void setChildren(Node node){
@@ -65,11 +69,6 @@ public abstract class Node implements Comparable<Node> {
         return this.content;
     }
 
-
-    public void setStorageIndex(int index){
-        this.storageIndex = index;
-    }
-
     public abstract long getSize();
 
     public boolean isDirectory(){
@@ -79,11 +78,9 @@ public abstract class Node implements Comparable<Node> {
 
     @Override
     public String toString() {
-        String fileStruct =
-                        "name= " + name +
-                        "\nsize= " + getSize() +
-                        "\ncreatedAt= " + createdAt;
-        return fileStruct;
+        StringBuilder fileStruct = new StringBuilder();
+        fileStruct.append("name= " + name + "\nisDirectory= " + isDirectory() + "\ncreatedAt= " + createdAt);
+        return fileStruct.toString();
     }
 
 }
