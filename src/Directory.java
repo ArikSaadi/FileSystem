@@ -2,51 +2,43 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class Directory extends Node {
-    private List<Node> nodes;
-    private LocalStorage localStorage;
+    private HashMap<String, Node> content;
 
-    public Directory(String name, String path){
-        super(name, path);
-        nodes = new ArrayList<>();
-        localStorage = new LocalStorage();
-        this.setPath(path);
-        int elementInPath = this.getPath().length() - 1;
-        String lastDir = this.getPath().split("/")[this.getPath().split("/").length - 1];
-//        this.setParent(this.getPath().split("/")[elementInPath]);
+    public Directory(String name, LocalDateTime createdAt){
+        super(name, createdAt);
+        this.content = new HashMap<String, Node>();
     }
 
-    public List<Node> getNodes(){
-        return nodes;
+    public String getName(){return this.name;}
+
+    public void addFile(String name, int size){
+        content.put(name, new File(name, size, LocalDateTime.now()));
     }
 
-
-    public void add(Node node) {
-        this.setChildren(node);
-        node.setParent(this);
-        nodes.add(node);
-        if(!node.isDirectory()){
-            localStorage.write(node.getContent());
-        }
+    public void deleteFile(String name){
+        if(this.content.containsKey(name)) this.content.remove(name);
     }
 
-    public ArrayList<String> getAllNodes(Node node){
-        ArrayList<String> retList = new ArrayList<>();
-        node.hasChildren(node);
-        return retList;
+    public boolean delete(){
+        content.clear();
+        return true;
     }
+
 
 
     @Override
-    public long getSize() {
-        long length = 0;
-        for (Node node : nodes) {
-            length += node.getSize();
+    public String getContent(int treeLevel) {
+        StringBuilder fileStructure = new StringBuilder();
+        if(!this.content.isEmpty()){
+            String adder = "";
+            for(Node node : content.values()){
+                if(treeLevel >= 0){
+                    adder = new String(new char[treeLevel]).replace("\0", "--");
+                }
+                fileStructure.append(adder + node.getContent(0));
+            }
         }
-        return length;
+        return fileStructure.toString();
     }
 
-    @Override
-    public int compareTo(Node o) {
-        return this.getName().compareTo(o.getName());
-    }
 }
