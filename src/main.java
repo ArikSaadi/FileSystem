@@ -19,5 +19,6 @@ public class main {
         System.out.println(filesManager.showFiles());
         System.out.println(filesManager.fileMapper.getFiles());
         System.out.println(filesManager.fileMapper.getDirectoryByFile("myFile.txt"));
+
     }
 }
