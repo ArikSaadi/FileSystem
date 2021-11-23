@@ -15,4 +15,7 @@ public class FileMapper {
         return directories.getOrDefault(name, null);
     }
 
+    public String getFiles(){
+        return directories.toString();
+    }
 }

@@ -1,9 +1,12 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 
 public class FilesManager extends Observable {
     private DirectoryTree directoryTree;
-    private FileMapper fileMapper;
+    protected FileMapper fileMapper;
 
     public FilesManager(){
         directoryTree = new DirectoryTree(new Directory("root", LocalDateTime.now()));
@@ -38,11 +41,15 @@ public class FilesManager extends Observable {
         this.setChanged();
     }
 
-    public String showFiles(){
-        String files = directoryTree.showFiles();
+    public HashMap<String, String> showFiles(){
+        String directories = directoryTree.showFiles();
+        String files = fileMapper.getFiles();
+        HashMap<String, String> retVal = new HashMap<>();
+        retVal.put("directories", directories);
+        retVal.put("files", files);
         this.setChanged();
         this.notifyObservers();
-        return files;
+        return retVal;
     }
 
     public void deleteFile(String name){
