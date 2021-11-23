@@ -3,30 +3,24 @@ import java.util.Arrays;
 
 public class File extends Node {
     private long size;
-    private byte[] content;
-    LocalStorage localStorage = new LocalStorage();
 
-    public File(String name, String parentDirectoryPath, byte[] content) {
-        super(name, parentDirectoryPath);
-        this.content = content;
-        this.size = content.length;
-    }
 
-    public byte[] getContent() {
-        return this.content;
-    }
-
-    @Override
-    public long getSize() {
-        if (content != null) {
-            return Arrays.toString(content).getBytes().length;
+    public File(String name, int size, LocalDateTime createdAt) {
+        super(name, createdAt);
+        try{
+            if (size < 1) throw new Exception("Size is not positive");
+            else this.size = size;
+        } catch (Exception exception){
+            switch (exception.getMessage()){
+                case "Size is not positive": System.out.println("Size is not positive");
+            }
         }
-        return 0;
     }
 
     @Override
-    public int compareTo(Node o) {
-
-        return this.getName().compareTo(o.getName());
+    public String getContent(int treeLevel) {
+        StringBuilder fileStructure = new StringBuilder();
+        fileStructure.append("File name: " + this.name + ", " + "File size: " + this.size + ", " + "Creation date: " + this.createdAt.toString() + "." + '\n');
+        return fileStructure.toString();
     }
 }
